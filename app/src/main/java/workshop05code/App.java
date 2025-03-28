@@ -56,10 +56,15 @@ public class App {
             String line;
             int i = 1;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
-                wordleDatabaseConnection.addValidWord(i, line);
-                i++;
+                if (line.matches("[a-z]{4}")) {
+                    System.out.println(line);
+                    wordleDatabaseConnection.addValidWord(i, line);
+                    i++;
+                } else {
+                    System.out.println("Ignored invalid word: '" + line + "'");
+                }
             }
+            
 
         } catch (IOException e) {
             System.out.println("Not able to load . Sorry!");
@@ -74,6 +79,11 @@ public class App {
             String guess = scanner.nextLine();
 
             while (!guess.equals("q")) {
+                
+                if (!guess.matches("[a-z]{4}")) {
+                    System.out.println("Invalid input. Please enter exactly 4 lowercase letters (a-z).");
+                }
+                else {
                 System.out.println("You've guessed '" + guess+"'.");
 
                 if (wordleDatabaseConnection.isValidWord(guess)) { 
@@ -81,6 +91,7 @@ public class App {
                 }else{
                     System.out.println("Sorry. This word is NOT in the the list.\n");
                 }
+            }
 
                 System.out.print("Enter a 4 letter word for a guess or q to quit: " );
                 guess = scanner.nextLine();
